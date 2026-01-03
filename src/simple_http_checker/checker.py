@@ -4,6 +4,7 @@ from typing import Collection
 
 logger = logging.getLogger(__name__)
 
+
 def check_urls(urls: Collection[str], timeout: int = 5) -> dict[str, str]:
     """
     Checks a list of urls
@@ -16,9 +17,13 @@ def check_urls(urls: Collection[str], timeout: int = 5) -> dict[str, str]:
         dict[str, str]: A dictionary mapping each URL to its status
     """
 
-    logger.info("Starting URL checks for %d URLs with a timeout of %d seconds", len(urls), timeout)
+    logger.info(
+        "Starting URL checks for %d URLs with a timeout of %d seconds",
+        len(urls),
+        timeout,
+    )
 
-    results = {}
+    results: dict[str, str] = {}
 
     for url in urls:
         status = "Unknown"
@@ -39,11 +44,10 @@ def check_urls(urls: Collection[str], timeout: int = 5) -> dict[str, str]:
             logger.warning("Connection error occurred for URL: %s", url)
         except requests.exceptions.RequestException as e:
             status = f"Request Exception: {type(e).__name__}"
-            logger.error("Request exception for URL %s: %s", url, str(e),exc_info=True)
-        
+            logger.error("Request exception for URL %s: %s", url, str(e), exc_info=True)
+
         results[url] = status
         logger.debug(f"Checked: {url:<40} Status: {status}")
-    
 
     logger.info("Completed URL checks.")
     return results
