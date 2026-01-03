@@ -40,7 +40,7 @@ jobs:
         
       - name: Security check
         run: |
-          bandit -c .\pyproject.toml -r .
+          bandit -c pyproject.toml -r .
         
           
           
